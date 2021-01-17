@@ -1,75 +1,84 @@
 function run(from, to) {
   var data = [
     {
-      "from": "usd",
-      "to": "aud",
-      "rate": 1.38
+      "from": "AUD",
+      "rate": "0.5",
+      "to": "USD"
     },
     {
-      "from": "usd",
-      "to": "jpy",
-      "rate": 103.57
+      "from": "USD",
+      "rate": "0.5",
+      "to": "EUR"
     },
     {
-      "from": "usd",
-      "to": "vnd",
-      "rate": 23.165
+      "from": "EUR",
+      "rate": "0.5",
+      "to": "GBP"
     },
     {
-      "from": "vnd",
-      "to": "jpy",
-      "rate": 0.0045
+      "from": "GBP",
+      "rate": "2",
+      "to": "EUR"
     },
     {
-      "from": "vnd",
-      "to": "eur",
-      "rate": 0.000037
+      "from": "EUR",
+      "rate": "2",
+      "to": "USD"
     },
     {
-      "from": "vnd",
-      "to": "thb",
-      "rate": 0.0013
-    },
-    {
-      "from": "jpy",
-      "to": "eur",
-      "rate": 0.0082
-    },
-    {
-      "from": "jpy",
-      "to": "cad",
-      "rate": 0.013
-    },
-    {
-      "from": "eur",
-      "to": "usd",
-      "rate": 1.18
-    },
-    {
-      "from": "aud",
-      "to": "cad",
-      "rate": 0.95
+      "from": "USD",
+      "rate": "2",
+      "to": "AUD"
     }
   ]
+
   var tempData = [];
   if (from.length > 0 && to.length > 0) {
+    // Find existed object by value
     for (let index = 0; index < data.length; index++) {
+      // Current ele
+      let element = data[index];
+      // Assign value
+      let f = from;
+      let t = to;
+      // Logic code
+      if (element.from === f && element.to == t) {
+        let j = 0;
+        while (element) {
 
-      const element = data[index];
-      if (element.from === from && element.to == to) {
-        tempData.push(element)
-      }
-      var prev = data[index - 1];
-      var next = data[index + 1];
-
-      if (element.from == to) {
-        console.log(element.to , from)
-        tempData.push(element);
+          if (element.from === f) {
+            // Check existed
+            const check = tempData.some(item => item.from === f && item.to === t);
+            // Push to temp
+            if (!check) {
+              tempData.push(element);
+            }
+            // Find next ele has from value equal to value
+            for (let index = 0; index < data.length; index++) {
+              const ele = data[index];
+              if (ele.from != t) {
+                continue;
+              } else {
+                element = ele;
+                f = element.from;
+                t = element.to
+                break;
+              }
+            }
+          }
+          // Continue processing
+          j++;
+          // Break completed
+          if (j == data.length) {
+            break;
+          }
+        }
+        break;
       }
     }
-
+    // Print output
     if (tempData) {
-      console.log(`Your money "${from} -> ${to}" can convert to the others like as`)
+      console.log(`Your input currency "${from} -> ${to}" can convert to the others like as`)
       console.log(`\n==============`)
       tempData.forEach(element => {
         console.log(`Your data : ${element.from} -> ${element.to}  : ${element.rate} `)
@@ -81,6 +90,6 @@ function run(from, to) {
   }
 }
 
-var from = "usd";
-var to = "jpy";
+var from = "AUD";
+var to = "USD";
 run(from, to);

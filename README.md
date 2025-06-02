@@ -1,3 +1,3 @@
 Le Quoc Hung
 Mail : quochungphp@gmail.com
-This project, I'm learning Algorithm for preparing next interview.
+This project, I'm revising Algorithm.
